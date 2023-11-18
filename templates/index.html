@@ -1,87 +1,95 @@
 <!DOCTYPE html>
 <html lang="">
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
 
     <!--Font Awesome-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
 
     <!--jQuery-->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
     <!--Bootstrap-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+      crossorigin="anonymous"
+    />
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-        crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://sdk.speech.azure.com/speechrecognizer/latest/speechrecognizer.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
 
-    <!--CSS-->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Análise de Sentimento</title>
+  </head>
 
-    <title>
-        Chat App
-    </title>
-</head>
-
-<body>
-    <nav class="navbar navbar-expand-lg navbar-chat">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#"><i class="fa-solid fa-message"></i> Chat App</a>
+  <body>
+    <div class="background-container">
+      <div class="container-analyze">
+        <h1>Análise de Sentimento</h1>
+        <div class="analyze-text">
+          <h3>Digite uma frase:</h3>
+          <textarea
+            id="textInput"
+            placeholder="Digite uma frase para ser avaliada"
+          ></textarea>
         </div>
-    </nav>
-
-    <!-- Chat -->
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="chat" id="chat">
-                    {% for msg in messages %}
-                    {% if msg.type == 'user' %}
-                    <div class="row">
-                        <div class="col">
-                            <div class="mensagem">
-                                <p>{{ msg.text }}</p>
-                            </div>
-                        </div>
-                    </div>
-                    {% endif %}
-                    {% endfor %}
-                </div>
-            </div>
-
-            <!-- Campo de input -->
-            <div class="col-md-6">
-                <div class="campo_input mt-3 mb-3">
-                    <div class="row justify-content-center">
-                        <div class="col">
-                            <div class="row justify-content-center">
-                                <div class="col-md-12">
-                                    <div class="mt-3 mb-3">
-                                        <div class="input-group mb-3 mt-3">
-                                            <input type="text" class="form-control" placeholder="Digite uma mensagem"
-                                                id="userMessage" aria-label="Digite uma mensagem"
-                                                aria-describedby="enviar_mensagem">
-                                            <button class="btn btn-outline-success" type="button"
-                                                id="enviar_mensagem"><i class="fa-solid fa-share"></i> Enviar</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <button class="button-anl-text" onclick="analyzeText()">
+          Analisar
+        </button>
+        <p id="result"></p>
+        <div id="output"></div>
+      </div>
     </div>
 
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-</body>
+    <!-- <h1>Análise de Sentimento por Voz em Tempo Real</h1>
+    <button onclick="startRecognition()">Iniciar Reconhecimento</button>
+    <button onclick="stopRecognition()">Parar Reconhecimento</button>
+    <p id="output"></p>
 
+    <script>
+        var recognition = new webkitSpeechRecognition() || new SpeechRecognition();
+        recognition.lang = 'pt-BR';
+        recognition.interimResults = true;
+
+        recognition.onresult = function(event) {
+            var transcript = '';
+            for (var i = event.resultIndex; i < event.results.length; i++) {
+                if (event.results[i].isFinal) {
+                    transcript += event.results[i][0].transcript;
+                } else {
+                    transcript += event.results[i][0].transcript + ' ';
+                }
+            }
+            document.getElementById('output').textContent = transcript;
+        };
+
+        function startRecognition() {
+            recognition.start();
+        }
+
+        function stopRecognition() {
+            recognition.stop();
+        }
+    </script> -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  </body>
 </html>
