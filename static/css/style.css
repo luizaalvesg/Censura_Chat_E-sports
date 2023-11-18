@@ -58,10 +58,6 @@ input.form-control {
     border: 1px solid black;
 }
 
-input.form-control:disabled {
-    background-color: rgb(71, 71, 71);
-}
-
 input.form-control:focus {
     color: rgb(255, 255, 255);
     background-color: #000000;
