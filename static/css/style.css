@@ -1,95 +1,122 @@
 /*body*/
 body {
-    background: rgb(0, 10, 14)
+  background: rgb(0, 0, 0);
+  font-family: "Poppins", sans-serif;
 }
 
 /*navbar*/
 .navbar-chat {
-    padding: 20px;
-    background-color: rgb(0, 0, 37);
+  padding: 20px;
+  background-color: rgb(0, 0, 37);
 }
 
-.navbar a {
-    color: white;
+.title {
+  margin-top: 1%;
+  color: #ffff;
+  text-align: center;
+  font-size: 5em;
+  animation: animate 4s linear infinite;
 }
+
+@keyframes animate{
+    0%{
+      opacity: 0.3;
+    }
+    50%{
+      opacity: 1;
+    }
+    100%{
+      opacity: 0.3;
+    }
+  }
 
 /*chat*/
 .chat {
-    background-color: rgb(0, 9, 37);
-    height: 600px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    border-radius: 20px;
-    border: 1px solid rgb(255, 255, 255);
-    overflow-y: auto;
-    overflow-x: hidden;
-    scrollbar-width: thin;
-    /* Para navegadores que suportam a propriedade scrollbar-width */
-    scrollbar-color: rgb(0, 255, 234) transparent;
+  background-color: rgb(0, 0, 0);
+  height: 400px;
+  border-radius: 10px;
+  border: 1px solid blueviolet;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgb(196, 197, 212);
 }
 
 .chat::-webkit-scrollbar {
-    width: 12px;
+  width: 12px;
 }
 
 .chat::-webkit-scrollbar-thumb {
-    background-color: rgb(0, 255, 234);
-    border-radius: 10px;
+  background-color: rgb(196, 197, 212);
+  border-radius: 10px;
 }
 
 .chat::-webkit-scrollbar-track {
-    background-color: transparent;
+  background-color: transparent;
 }
-
-
 
 /*input*/
 
 .campo_input {
-    background-color: rgb(34, 65, 54);
-    padding: 20px;
-    border-radius: 20px;
-    border: 1px solid white;
+  border-radius: 20px;
+  
 }
 
 input.form-control {
-    color: rgb(255, 255, 255);
-    background-color: #000000;
-    border: 1px solid black;
+  color: rgb(255, 255, 255);
+  background-color: #000000;
+  border: 1px solid blueviolet;
 }
 
 input.form-control:focus {
-    color: rgb(255, 255, 255);
-    background-color: #000000;
-    border: 1px solid black;
+  color: rgb(255, 255, 255);
+  background-color: #000000;
+  border: 1px solid black;
 }
 
 input.form-control::placeholder {
-    color: white;
+  color: white;
 }
 
 button.btn-outline-success {
-    color: rgb(0, 255, 166);
-    border-color: rgb(0, 255, 166);
-    background-color: #00130e;
+  color: rgb(0, 255, 166);
+  border-color: rgb(0, 255, 166);
+  background-color: #00130e;
 }
 
 button.btn-outline-success:hover {
-    color: #00130e;
-    border-color: #00130e;
-    background-color: rgb(0, 255, 166);
+  color: #00130e;
+  border-color: #00130e;
+  background-color: rgb(0, 255, 166);
 }
 
 /*mensagem*/
 .mensagem {
-    background-color: rgb(0, 119, 128);
-    display: inline-block;
-    padding: 10px;
-    margin: 20px 0 0 20px;
-    border-radius: 20px;
+  background-color: blueviolet;
+  display: inline-block;
+  padding: 5px 12px 3px 10px;
+  margin: 20px 0 0 20px;
+  border-radius: 20px;
 }
 
 .mensagem p {
-    color: white;
-    margin-top: 10px;
+  color: white;
+  margin-top: 10px;
+}
+
+#btnVoiceChat {
+    background-color: blueviolet;
+    color: #ffff;
+}
+
+#btnVoiceChat:hover{
+    background-color: rgb(94, 0, 182);
+}
+
+#voiceStatus {
+  color: #ff0000;
+  margin-left: 1%;
+  margin-top: 1%;
 }
