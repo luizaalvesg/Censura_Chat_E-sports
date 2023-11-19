@@ -33,5 +33,5 @@ response = client.analyze_sentiment(
     show_opinion_mining = True,
 
 )
-# print(response)
+
 print(response[0].sentiment)
