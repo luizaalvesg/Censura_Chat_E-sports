@@ -68,6 +68,11 @@ input.form-control::placeholder {
     color: white;
 }
 
+input.form-control:disabled {
+    color: rgb(255, 255, 255);
+    background-color: #3a3a3a;
+}
+
 button.btn-outline-success {
     color: rgb(0, 255, 166);
     border-color: rgb(0, 255, 166);

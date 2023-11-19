@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 from azure.core.credentials import AzureKeyCredential
 from azure.ai.textanalytics import TextAnalyticsClient
+import requests
 
 app = Flask(__name__)
 
@@ -39,6 +40,30 @@ def analyze_text():
 
     sentiment = response[0].sentiment
     return jsonify({'sentiment': sentiment})
+
+@app.route('/transcrever_audio', methods=['POST'])
+def transcrever_audio():
+    try:
+        audio_data = request.files['audio'].read()
+
+        headers = {
+            'Content-Type': 'audio/wav',
+            'Ocp-Apim-Subscription-Key': API_KEY,
+        }
+
+        params = {
+            'language': 'pt-BR',
+        }
+
+        response = requests.post(ENDPOINT + '/speechtotext/v3.0/recognize', headers=headers, params=params, data=audio_data)
+
+        if response.status_code == 200:
+            transcribed_text = response.json().get('DisplayText', '')
+            return jsonify({'transcribed_text': transcribed_text})
+        else:
+            return jsonify({'error': f'Erro na transcrição de áudio. Código de status: {response.status_code}'})
+    except Exception as e:
+        return jsonify({'error': f'Erro interno no servidor: {str(e)}'})
 
 if __name__ == '__main__':
     app.run(debug=True)
