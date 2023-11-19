@@ -76,6 +76,9 @@ $(document).ready(function () {
     $("#voiceStatus").text(
       "Iniciando chat por voz. Fale para iniciar a transcrição."
     );
+    setTimeout(function () {
+        $("#voiceStatus").text(""); 
+      }, 3000);
     $.ajax({
       type: "GET",
       url: "/speech_to_text", 
