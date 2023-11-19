@@ -1,4 +1,13 @@
 $(document).ready(function () {
+  $("#userMessage").keypress(function (e) {
+    if (e.which == 13) {
+      e.preventDefault();
+      var userMessage = $(this).val();
+      if (userMessage.trim() !== "") {
+        $("#enviar_mensagem").click();
+      }
+    }
+  });
   $("#enviar_mensagem").click(function () {
     var userMessage = $("#userMessage").val();
     if (userMessage.trim() !== "") {
@@ -63,16 +72,15 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-  // Função para enviar gravação de voz para o back-end
   $("#btnVoiceChat").click(function () {
     $("#voiceStatus").text(
       "Iniciando chat por voz. Fale para iniciar a transcrição."
     );
     $.ajax({
       type: "GET",
-      url: "/speech_to_text", // Rota para o back-end de reconhecimento de voz
+      url: "/speech_to_text", 
       success: function (data) {
-        var voiceMessage = data.transcribed_text; // Obtém o texto reconhecido
+        var voiceMessage = data.transcribed_text;
         if (voiceMessage && voiceMessage.trim() !== "") {
           processVoiceMessage(voiceMessage);
         }
@@ -98,7 +106,6 @@ $(document).ready(function () {
     });
   }
 
-  // Função para exibir a mensagem no chat
   function exibirMensagemNoChat(message) {
     $.post("/send_message", { user_message: message }, function (data) {
       if (data.success) {
