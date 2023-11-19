@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 from azure.core.credentials import AzureKeyCredential
 from azure.ai.textanalytics import TextAnalyticsClient
+import azure.cognitiveservices.speech as speechsdk
 
 app = Flask(__name__)
 
@@ -39,6 +40,28 @@ def analyze_text():
 
     sentiment = response[0].sentiment
     return jsonify({'sentiment': sentiment})
+
+@app.route('/speech_to_text', methods=['GET'])
+def speech_to_text():
+    
+    azure_key = '7f04473048824fd08f0471279aee5b48'
+    azure_region = 'brazilsouth'
+    speech_config = speechsdk.SpeechConfig(subscription=azure_key, region=azure_region)
+    
+    speech_config.speech_recognition_language = "pt-BR"
+    
+    speech_recognizer = speechsdk.SpeechRecognizer(speech_config=speech_config)
+    
+    result = speech_recognizer.recognize_once_async().get()
+
+    if result.reason == speechsdk.ResultReason.RecognizedSpeech:
+        recognized_text = result.text
+        return jsonify({'transcribed_text': recognized_text})
+    elif result.reason == speechsdk.ResultReason.NoMatch:
+        return jsonify({'transcribed_text': 'Não foi possível reconhecer a fala'})
+    elif result.reason == speechsdk.ResultReason.Canceled:
+        cancellation_details = result.cancellation_details
+        return jsonify({'transcribed_text': f'Reconhecimento de fala cancelado. Motivo: {cancellation_details.error_details}'})
 
 if __name__ == '__main__':
     app.run(debug=True)
